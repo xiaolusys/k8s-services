@@ -4,7 +4,7 @@ metadata:
   annotations:
     prometheus.io/scrape: 'true'
     prometheus.io/port: '9102'
-  name: statsd-exporter
+  name: statsd
   namespace: default
 spec:
   ports:
