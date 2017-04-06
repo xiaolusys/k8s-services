@@ -23,6 +23,12 @@ spec:
           name: redis-data
       - image: oliver006/redis_exporter
         name: exporter
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis
+              key: REDIS_PASSWORD
       volumes:
       - name: redis-data
         persistentVolumeClaim:
