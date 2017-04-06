@@ -1,0 +1,29 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: redis
+  name: redis
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: redis
+  template:
+    metadata:
+      labels:
+        run: redis
+    spec:
+      containers:
+      - image: bitnami/redis:3.2.8-r1
+        name: redis
+        volumeMounts:
+        - mountPath: /bitnami/redis
+          name: redis-data
+      - image: oliver006/redis_exporter
+        name: exporter
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: redis-pvd-claim
