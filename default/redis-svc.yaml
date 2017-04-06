@@ -18,4 +18,4 @@ spec:
     targetPort: 9121
   selector:
     run: redis
-  type: ClusterIP
+  type: NodePort
