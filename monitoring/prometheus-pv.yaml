@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    # FIXME: use the right IP
+    server: 0b10d4a8a0-snv34.cn-hangzhou.nas.aliyuncs.com
+    path: "/prometheus"

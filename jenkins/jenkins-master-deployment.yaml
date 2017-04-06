@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: "jenkins"
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      nodeSelector:
+        node: "true"
+      containers:
+        - name: jenkins
+          image: "kubeup/docker-jenkins"
+          env:
+            - name: JAVA_OPTS
+              value: "-Xms512m -Xmx512m"
+          ports:
+            - containerPort: 8080
+              name: http
+            - containerPort: 50000
+              name: slavelistener
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+          volumeMounts:
+            -
+              mountPath: /var/jenkins_home
+              name: jenkins-home
+              readOnly: false
+      volumes:
+      - name: jenkins-home
+        persistentVolumeClaim:
+          claimName: jenkins
