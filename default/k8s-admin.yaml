@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    archon.kubeup.com/alias: admin
+    archon.kubeup.com/csr: |-
+      {
+        "CN": "admin",
+        "hosts": [
+          "admin"
+        ],
+        "key": {
+          "algo": "ecdsa",
+          "size": 256
+        },
+        "names": [
+          {
+            "C": "US",
+            "L": "CA",
+            "ST": "San Francisco"
+          }
+        ]
+      }
+    archon.kubeup.com/status: Approved
+    archon.kubeup.com/type: csr
+    archon.kubeup.com/ca: k8s-ca
+  name: admin
+type: Opaque

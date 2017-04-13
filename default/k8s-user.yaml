@@ -1,0 +1,8 @@
+apiVersion: archon.kubeup.com/v1
+kind: User
+metadata:
+  name: core
+spec:
+  name: core
+  sshAuthorizedKeys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIV/Uc9VSVptRHhcXBMQ11jYyA4WkGqBbK8jyjIyeMd5G8nFNAupItrIGibOt5OAIBdvuor2tPHmhzwyZZzdpzhOlYSJB1F1zIrBO8brEqpFf5mOF6oBTC7d5vPX2H4hkTNAFyuBnz2aUHkcHFa/hMN8e0VDEo06U1lk7gYqOGobxQUE+c5V2fxifMV645HtVJpHRr19/RkmIC1LeQeKnJGINCbMwUOJp7qsQ6ttx9q2qQnvkJDhpOYxXjKXiE/aBrE8x9RrOGLjtM7J8K0xItmsuMjzNdO9htIqwX6zR3QE7/GxpB+93MDyzrF8CmV2/76Cd/MNT3Og8pHyru5TLb meron@imeron
