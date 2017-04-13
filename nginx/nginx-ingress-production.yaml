@@ -1,0 +1,85 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: production
+  namespace: default
+spec:
+  rules:
+  - host: "m.xiaolumm.com"
+    http:
+      paths:
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /static/
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /console/
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /mall/
+      - backend:
+          serviceName: nginx
+          servicePort: 80
+        path: /
+  - host: "m.xiaolumeimei.com"
+    http:
+      paths:
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /static/
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /console/
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /mall/
+      - backend:
+          serviceName: nginx
+          servicePort: 80
+        path: /
+  - host: "admin.xiaolumm.com"
+    http:
+      paths:
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /static/
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /console/
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /mall/
+      - backend:
+          serviceName: nginx
+          servicePort: 80
+        path: /
+  - host: "api.xiaolumm.com"
+    http:
+      paths:
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /static/
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /console/
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /mall/
+      - backend:
+          serviceName: nginx
+          servicePort: 80
+        path: /
