@@ -23,7 +23,7 @@ spec:
           serviceName: static-staging
           servicePort: 80
       - backend:
-          serviceName: static
+          serviceName: static-staging
           servicePort: 80
         path: /mp/
       - path: /
@@ -46,7 +46,7 @@ spec:
           serviceName: static-staging
           servicePort: 80
       - backend:
-          serviceName: static
+          serviceName: static-staging
           servicePort: 80
         path: /mp/
       - path: /
