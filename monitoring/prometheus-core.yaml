@@ -19,7 +19,7 @@ spec:
       - name: prometheus
         image: prom/prometheus:v1.5.2
         args:
-          - '-storage.local.retention=720h'
+          - '-storage.local.retention=360'
           - '-storage.local.memory-chunks=500000'
           - '-config.file=/etc/prometheus/prometheus.yml'
         ports:
@@ -31,7 +31,7 @@ spec:
             memory: 500M
           limits:
             cpu: 1000m
-            memory: 1024M
+            memory: 2048M
         volumeMounts:
         - name: config-volume
           mountPath: /etc/prometheus
