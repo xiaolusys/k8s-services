@@ -23,10 +23,6 @@ spec:
           servicePort: 80
         path: /mall/
       - backend:
-          serviceName: static
-          servicePort: 80
-        path: /mp/
-      - backend:
           serviceName: nginx
           servicePort: 80
         path: /
@@ -45,11 +41,7 @@ spec:
           serviceName: static
           servicePort: 80
         path: /mall/
-      - backend:
-          serviceName: static
-          servicePort: 80
-        path: /mp/
-      - backend:
+       - backend:
           serviceName: nginx
           servicePort: 80
         path: /
@@ -68,10 +60,6 @@ spec:
           serviceName: static
           servicePort: 80
         path: /mall/
-      - backend:
-          serviceName: static
-          servicePort: 80
-        path: /mp/
       - backend:
           serviceName: nginx
           servicePort: 80
@@ -92,10 +80,6 @@ spec:
           servicePort: 80
         path: /mall/
       - backend:
-          serviceName: static
-          servicePort: 80
-        path: /mp/
-      - backend:
           serviceName: nginx
           servicePort: 80
         path: /
@@ -115,9 +99,24 @@ spec:
           servicePort: 80
         path: /mall/
       - backend:
+          serviceName: nginx
+          servicePort: 80
+        path: /
+  - host: "outware.xiaolumm.com"
+    http:
+      paths:
+      - backend:
           serviceName: static
           servicePort: 80
-        path: /mp/
+        path: /static/
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /console/
+      - backend:
+          serviceName: static
+          servicePort: 80
+        path: /mall/
       - backend:
           serviceName: nginx
           servicePort: 80
