@@ -14,3 +14,10 @@ spec:
         backend:
           serviceName: grafana
           servicePort: 3000
+  - host: "prom.xiaolumm.com"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: prometheus
+          servicePort: 9090
