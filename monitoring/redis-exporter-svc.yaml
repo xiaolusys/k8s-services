@@ -5,7 +5,6 @@ metadata:
     prometheus.io/scrape: 'true'
     prometheus.io/port: '9121'
   name: redis-exporter
-  namespace: default
 spec:
   ports:
   - name: exporter
