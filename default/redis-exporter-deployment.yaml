@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: redis-exporter
+  name: redis-exporter
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: redis-exporter
+  template:
+    metadata:
+      labels:
+        run: redis-exporter
+    spec:
+      containers:
+      - image: oliver006/redis_exporter
+        name: exporter
+        env:
+        - name: REDIS_ADDR
+          valueFrom:
+            secretKeyRef:
+              name: redis
+              key: REDIS_ADDR
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis
+              key: REDIS_PASSWORD

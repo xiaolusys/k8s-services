@@ -7,7 +7,7 @@ data:
       evaluation_interval: 10s
     
     rule_files:
-      - "/etc/prometheus/rules/*.rules"
+      - "/etc/prometheus/*.rules"
 
     scrape_configs:
 
@@ -103,7 +103,7 @@ data:
           - source_labels: [__meta_kubernetes_pod_name]
             action: replace
             target_label: kubernetes_pod_name
-  rules/alert.rules: |
+  alert.rules: |
     ALERT service_down
       IF up{job="prometheus"} == 0
       ANNOTATIONS {
@@ -142,7 +142,7 @@ data:
       ANNOTATIONS {
         summary = "Response error rate > 1% !!!",
       }
-  rules/xiaolumm.rules: |
+  xiaolumm.rules: |
     xiaolumm:payment_count = increase(xiaolumm_payment_count[2d]) and xiaolumm_payment_count and  (time() + 8*3600) % (3600*24) / 5 + 200> count_over_time(xiaolumm_payment_count[2d])
     xiaolumm:payment_amount = increase(xiaolumm_payment_amount[2d]) and xiaolumm_payment_amount and  (time() + 8*3600) % (3600*24) / 5 + 200 > count_over_time(xiaolumm_payment_amount[2d])
     xiaolumm:boutique = delta(xiaolumm_boutique[1d]) and xiaolumm_boutique and  (time() + 8*3600) % (3600*24) / 5 + 200 > count_over_time(xiaolumm_boutique[48h])
