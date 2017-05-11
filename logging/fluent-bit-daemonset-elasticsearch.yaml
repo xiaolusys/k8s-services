@@ -15,6 +15,8 @@ spec:
         version: v1
         kubernetes.io/cluster-service: "true"
     spec:
+      nodeSelector:
+        node: 'true'
       containers:
       - name: fluent-bit
         image: fluent/fluent-bit-kubernetes-daemonset:0.11

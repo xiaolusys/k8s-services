@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: gogs
+  name: gogs
+  namespace: devops
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      run: gogs
+  template:
+    metadata:
+      labels:
+        run: gogs
+    spec:
+      containers:
+      - image: registry.aliyuncs.com/xiaolu-img/gogs:0.9.64
+        name: gogs
+        volumeMounts:
+        - name: gogs-data
+          mountPath: /data
+          readOnly: false
+      volumes:
+      - name: gogs-data
+        persistentVolumeClaim:
+          claimName: gogs

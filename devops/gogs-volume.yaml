@@ -1,11 +1,11 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: jenkins
+  name: gogs
 spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: cloud
   resources:
     requests:
-      storage: 20Gi
+      storage: 3Gi

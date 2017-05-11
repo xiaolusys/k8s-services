@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: postgres
+  name: postgres
+  namespace: logging
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      run: postgres
+  template:
+    metadata:
+      labels:
+        run: postgres
+    spec:
+      containers:
+      - image: registry.aliyuncs.com/xiaolu-img/gogs:0.9.64
+        name: postgres
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /data2
+          readOnly: false
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgresql-db

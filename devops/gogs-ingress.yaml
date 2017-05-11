@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: gogs
+  namespace: devops
+spec:
+  rules:
+  - host: git.xiaolumm.com
+    http:
+      paths:
+      - backend:
+          serviceName: gogs
+          servicePort: 3000
+        path: /

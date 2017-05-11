@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: jenkins
+  name: redis-pvd-claim
 spec:
   accessModes:
     - ReadWriteOnce

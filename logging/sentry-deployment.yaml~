@@ -1,0 +1,90 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "6"
+  creationTimestamp: 2017-05-04T11:48:07Z
+  generation: 6
+  labels:
+    run: sentry
+  name: sentry
+  namespace: logging
+  resourceVersion: "8418302"
+  selfLink: /apis/apps/v1beta1/namespaces/logging/deployments/sentry
+  uid: 8a76e19a-30bf-11e7-a8bb-00163e132a55
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      run: sentry
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: sentry
+    spec:
+      containers:
+      - env:
+        - name: SENTRY_URL_PREFIX
+          value: http://sentry.xiaolumm.com
+        - name: SECRET_KEY
+          value: _llx(byf$g52s4^&6!ehtr0yqrz&f%o9z_(90m0oii)sbm^8yt
+        - name: C_FORCE_ROOT
+          value: "1"
+        - name: DATABASE_URL
+          value: postgres://postgres:fzODym7XT0@pilfering-goose-postgresql.logging.svc.cluster.local/postgres
+        - name: SENTRY_BEACON
+          value: "False"
+        - name: SENTRY_DATA_DIR
+          value: /data
+        - name: SENTRY_EMAIL_HOST
+          value: smtp.exmail.qq.com
+        - name: SENTRY_EMAIL_HOST_PASSWORD
+          value: Xiuqing2016
+        - name: SENTRY_EMAIL_HOST_USER
+          value: xiuqing.mei@xiaolumeimei.com
+        - name: SENTRY_EMAIL_PORT
+          value: "25"
+        - name: SENTRY_EMAIL_USE_TLS
+          value: "False"
+        - name: SENTRY_SCRIPTS_DIR
+          value: /conf
+        - name: SENTRY_SERVER_EMAIL
+          value: sentry.xiaolumm.com
+        image: slafs/sentry
+        imagePullPolicy: Always
+        name: sentry
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: 2017-05-04T11:48:07Z
+    lastUpdateTime: 2017-05-04T11:48:07Z
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: 2017-05-04T11:50:27Z
+    lastUpdateTime: 2017-05-04T12:00:16Z
+    message: ReplicaSet "sentry-3544692997" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 6
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

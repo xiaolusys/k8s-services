@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: sentry
+  namespace: logging
+spec:
+  rules:
+  - host: sentry.xiaolumm.com
+    http:
+      paths:
+      - backend:
+          serviceName: sentry
+          servicePort: 9000
+        path: /
