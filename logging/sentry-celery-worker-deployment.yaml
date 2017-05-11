@@ -2,14 +2,14 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   labels:
-    run: sentry
-  name: sentry
+    run: sentry-celery-worker
+  name: sentry-celery-worker
   namespace: logging
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: sentry
+      run: sentry-celery-worker
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        run: sentry
+        run: sentry-celery-worker
     spec:
       containers:
       - env:
@@ -71,3 +71,6 @@ spec:
           value: "False"
         image: slafs/sentry
         name: sentry
+        args:
+        - celery
+        - worker
