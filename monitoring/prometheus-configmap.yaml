@@ -1,11 +1,50 @@
 apiVersion: v1
 data:
+  alert.rules: |
+    ALERT service_down
+      IF up{job="prometheus"} == 0
+      ANNOTATIONS {
+        summary = "Instance {{ $labels.instance }} is down",
+      }
+
+    ALERT cpu_threshold_exceeded
+      IF (100 * (1 - avg by(instance)(irate(node_cpu{job='prometheus',mode='idle'}[5m])))) > 80
+      ANNOTATIONS {
+        summary = "Instance {{ $labels.instance }} CPU usage is dangerously high",
+        description = "This device's cpu usage has exceeded the threshold with a value of {{ $value }}.",
+      }
+
+    ALERT mem_threshold_exceeded
+      IF (node_memory_MemFree{job='prometheus'} + node_memory_Cached{job='prometheus'} + node_memory_Buffers{job='prometheus'})/1000000 < 1024
+      ANNOTATIONS {
+        summary = "Instance {{ $labels.instance }} memory usage is dangerously high",
+        description = "This device's memory usage has exceeded the threshold with a value of {{ $value }}.",
+      }
+
+    ALERT filesystem_threshold_exceeded
+      IF node_filesystem_avail{job='prometheus',mountpoint='/',fstype='rootfs'} / node_filesystem_size{job='prometheus'} * 100 < 20
+      ANNOTATIONS {
+        summary = "Instance {{ $labels.instance }} filesystem usage is dangerously high",
+        description = "This device's filesystem usage has exceeded the threshold with a value of {{ $value }}.",
+      }
+
+    ALERT celery_queue
+      IF sum(rate(celery_queue[1m])) > 5
+      ANNOTATIONS {
+        summary = "Celery queue {{ $labels.queue }} is block",
+      }
+
+    ALERT response_error_rate
+      IF sum(rate(statsd_django_http_responses{code="500"}[5m])) by (job) / sum(rate(statsd_django_http_responses[5m])) by (job) > 0.01
+      ANNOTATIONS {
+        summary = "Response error rate > 1% !!!",
+      }
   prometheus.yml: |
     global:
       scrape_interval: 10s
       scrape_timeout: 10s
       evaluation_interval: 10s
-    
+
     rule_files:
       - "/etc/prometheus/*.rules"
 
@@ -103,45 +142,6 @@ data:
           - source_labels: [__meta_kubernetes_pod_name]
             action: replace
             target_label: kubernetes_pod_name
-  alert.rules: |
-    ALERT service_down
-      IF up{job="prometheus"} == 0
-      ANNOTATIONS {
-        summary = "Instance {{ $labels.instance }} is down",
-      }
-    
-    ALERT cpu_threshold_exceeded
-      IF (100 * (1 - avg by(instance)(irate(node_cpu{job='prometheus',mode='idle'}[5m])))) > 80
-      ANNOTATIONS {
-        summary = "Instance {{ $labels.instance }} CPU usage is dangerously high",
-        description = "This device's cpu usage has exceeded the threshold with a value of {{ $value }}.",
-      }
-    
-    ALERT mem_threshold_exceeded
-      IF (node_memory_MemFree{job='prometheus'} + node_memory_Cached{job='prometheus'} + node_memory_Buffers{job='prometheus'})/1000000 < 1024
-      ANNOTATIONS {
-        summary = "Instance {{ $labels.instance }} memory usage is dangerously high",
-        description = "This device's memory usage has exceeded the threshold with a value of {{ $value }}.",
-      }
-    
-    ALERT filesystem_threshold_exceeded
-      IF node_filesystem_avail{job='prometheus',mountpoint='/',fstype='rootfs'} / node_filesystem_size{job='prometheus'} * 100 < 20
-      ANNOTATIONS {
-        summary = "Instance {{ $labels.instance }} filesystem usage is dangerously high",
-        description = "This device's filesystem usage has exceeded the threshold with a value of {{ $value }}.",
-      }
-    
-    ALERT celery_queue
-      IF sum(rate(celery_queue[1m])) > 5
-      ANNOTATIONS {
-        summary = "Celery queue {{ $labels.queue }} is block",
-      }
-    
-    ALERT response_error_rate
-      IF sum(rate(statsd_django_http_responses{code="500"}[5m])) by (job) / sum(rate(statsd_django_http_responses[5m])) by (job) > 0.01
-      ANNOTATIONS {
-        summary = "Response error rate > 1% !!!",
-      }
   xiaolumm.rules: |
     xiaolumm:payment_count = increase(xiaolumm_payment_count[2d]) and xiaolumm_payment_count and  (time() + 8*3600) % (3600*24) / 5 + 200> count_over_time(xiaolumm_payment_count[2d])
     xiaolumm:payment_amount = increase(xiaolumm_payment_amount[2d]) and xiaolumm_payment_amount and  (time() + 8*3600) % (3600*24) / 5 + 200 > count_over_time(xiaolumm_payment_amount[2d])

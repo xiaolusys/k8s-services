@@ -4,7 +4,8 @@ metadata:
   name: prometheus
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
+  storageClassName: cloud
   resources:
     requests:
-      storage: 1Mi
+      storage: 3Gi
