@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: fluent-bit
+  namespace: logging
+  labels:
+    k8s-app: fluent-bit-logging
+    version: v1
+    kubernetes.io/cluster-service: "true"
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: fluent-bit-logging
+        version: v1
+        kubernetes.io/cluster-service: "true"
+    spec:
+      nodeSelector:
+        node: 'true'
+      containers:
+      - name: fluent-bit
+        image: kubeup/fluent-bit:sls
+        imagePullPolicy: Always
+        env:
+          - name:  ALIYUN_ACCESS_KEY
+            value: "LTAIAONBXeG5kyUu"
+          - name:  ALIYUN_ACCESS_KEY_SECRET
+            value: "RCdwlIJ9K6D7o4Hm4BA4hqcgS1lMxR"
+          - name:  ALIYUN_SLS_PROJECT
+            value: "xiaolulogsys"
+          - name:  ALIYUN_SLS_ENDPOINT
+            value: "cn-hangzhou.log.aliyuncs.com"
+          - name:  ALIYUN_SLS_LOGSTORE
+            value: "xiaolulog"
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+      terminationGracePeriodSeconds: 10
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers

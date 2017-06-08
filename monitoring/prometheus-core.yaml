@@ -43,4 +43,4 @@ spec:
           name: prometheus-core
       - name: data-volume
         persistentVolumeClaim:
-          claimName: prometheus
+          claimName: prometheus-nas
