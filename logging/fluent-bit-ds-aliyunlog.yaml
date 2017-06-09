@@ -23,9 +23,9 @@ spec:
         imagePullPolicy: Always
         env:
           - name:  ALIYUN_ACCESS_KEY
-            value: "LTAIAONBXeG5kyUu"
+            value: "LTAIwTDn7CHzBbaU"
           - name:  ALIYUN_ACCESS_KEY_SECRET
-            value: "RCdwlIJ9K6D7o4Hm4BA4hqcgS1lMxR"
+            value: "NYkG6mSxsmUeR6kY70bZZfhR6gAMZ4"
           - name:  ALIYUN_SLS_PROJECT
             value: "xiaolulogsys"
           - name:  ALIYUN_SLS_ENDPOINT
